@@ -14,7 +14,7 @@ int x = 431424, y = 598356, r = 427089, px = 247872, py = 799248, pr,
                    {411985, 610832, 415808, 595540},
                    {px, py, px, py},
                    {614928, 399424, 615744, 428369}},
-    score = 0;
+    score = 0, _pause = 0;
 
 // extract a 2-bit number from a block entry
 int NUM(int x, int y) { return 3 & block[p][x] >> y; }
@@ -108,9 +108,15 @@ int do_tick() {
 
 // main game loop with wasd input checking
 void runloop() {
-  while (do_tick()) {
+  while (1) {
+    if ((c = getch()) == 'p')
+      _pause = 1 - _pause;
+    if (_pause)
+      continue;
+    if (!do_tick())
+      break;
     usleep(10000);
-    if ((c = getch()) == 'a' && x > 0 && !check_hit(x - 1, y, r)) {
+    if (c == 'a' && x > 0 && !check_hit(x - 1, y, r)) {
       x--;
     }
     if (c == 'd' && x + NUM(r, 16) < 9 && !check_hit(x + 1, y, r)) {
