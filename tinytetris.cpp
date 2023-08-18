@@ -89,7 +89,8 @@ int check_hit(int x, int y, int r) {
 
 // slowly tick the piece y position down so the piece falls
 int do_tick() {
-  if (++tick > 30) {
+  tick += score / 70 ? score / 70 : 1;
+  if (tick > 30) {
     tick = 0;
     if (check_hit(x, y + 1, r)) {
       if (!y) {
