@@ -1,6 +1,7 @@
 LDFLAGS=-lcurses
 
-all: tinytetris
+all:
+	g++ -o tinytetris tinytetris.cpp -lncurses
 
 clean:
-	rm -f tinytetris tinytetris-commented
+	rm -f tinytetris
